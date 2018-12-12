@@ -1,5 +1,8 @@
-﻿using System;
+﻿using IntermediarioMVC.Migrations;
+using IntermediarioMVC.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +16,8 @@ namespace IntermediarioMVC
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<IntermediarioMVCContext, Configuration>());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

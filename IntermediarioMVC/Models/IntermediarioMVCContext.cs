@@ -20,5 +20,7 @@ namespace IntermediarioMVC.Models
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<IntermediarioMVC.Models.Provider> Providers { get; set; }
     }
 }
