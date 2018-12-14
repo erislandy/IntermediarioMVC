@@ -27,6 +27,14 @@
                     <li>@Html.ActionLink("Category", "Index", "Categories")</li>
                     <li>@Html.ActionLink("Product", "Index", "Products")</li>
                     <li>@Html.ActionLink("Provider", "Index", "Providers")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transfer<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Stock", "Stock", "Transfer")</li>
+                            <li>@Html.ActionLink("Purchase", "Purchase", "Transfer")</li>
+                            <li>@Html.ActionLink("Sale", "Sale", "Transfer")</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

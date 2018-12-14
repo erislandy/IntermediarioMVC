@@ -22,6 +22,7 @@ namespace IntermediarioMVC.Models
         #region Navigation properties
 
         public virtual ICollection<Product> Products { get; set; }
+
         #endregion
 
     }

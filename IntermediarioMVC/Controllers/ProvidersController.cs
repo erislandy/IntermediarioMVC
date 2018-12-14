@@ -78,7 +78,7 @@ namespace IntermediarioMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PersonId,FirstName,Lastname,PhoneNumber,Address,ImagePath")] Provider provider)
+        public ActionResult Edit(Provider provider)
         {
             if (ModelState.IsValid)
             {

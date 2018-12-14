@@ -12,6 +12,8 @@ namespace IntermediarioMVC.Models
 
         [Key]
         public int ProductId { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required")]
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
@@ -29,6 +31,8 @@ namespace IntermediarioMVC.Models
 
         #region Navigation properties
         public virtual Category Category { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
+
 
         #endregion
     }
