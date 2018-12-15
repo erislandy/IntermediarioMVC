@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaysController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProvidersController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Messenger.cs" />
     <Compile Include="Models\Pay.cs" />
+    <Compile Include="Models\PayDetailsView.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductInStock.cs" />
@@ -306,6 +308,11 @@
     <Content Include="Views\Transfer\NewPurchase.cshtml" />
     <Content Include="Views\Transfer\ModifyState.cshtml" />
     <Content Include="Views\Transfer\SaleAction.cshtml" />
+    <Content Include="Views\Pays\Create.cshtml" />
+    <Content Include="Views\Pays\Delete.cshtml" />
+    <Content Include="Views\Pays\Details.cshtml" />
+    <Content Include="Views\Pays\Edit.cshtml" />
+    <Content Include="Views\Pays\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

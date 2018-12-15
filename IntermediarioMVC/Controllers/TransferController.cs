@@ -243,8 +243,7 @@ namespace IntermediarioMVC.Controllers
         }
 
         #endregion
-
-
+        
         #region Sale operations
 
         //New sale method
@@ -344,7 +343,6 @@ namespace IntermediarioMVC.Controllers
 
 
         #endregion
-
 
     }
 }

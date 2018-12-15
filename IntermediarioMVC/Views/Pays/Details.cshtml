@@ -1,0 +1,152 @@
+﻿@model IntermediarioMVC.Models.PayDetailsView
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pay</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Provider.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Provider.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PayId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<div class="row">
+    <section id="Sales" class="col-md-6">
+        <h3>Related Sales</h3>
+        @if (Model.Sales != null && Model.Sales.Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].DateOfSale)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].ProductInStock.Product.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].SalePrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].SaleState)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.Sales)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductInStock.Product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SalePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SaleState)
+                        </td>
+                        @if (!Model.Certificated)
+                        {
+                            <td>
+                                @Html.ActionLink("Delete", "DeleteSale", new { saleId = item.SaleId, payId = Model.PayId })
+                            </td>
+
+                        }
+                     </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <h4 class="alert-danger">There are not related sales yet</h4>
+        }
+       </section>
+   @if (!Model.Certificated)
+   {
+    <section id="AvailableSales" class="col-md-6">
+        <h3>Available Sales</h3>
+        @if (Model.AvailableSales != null && Model.AvailableSales.Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].DateOfSale)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].ProductInStock.Product.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].SalePrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AvailableSales[0].SaleState)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.AvailableSales)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductInStock.Product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SalePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SaleState)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Add", "AddSale", new { saleId = item.SaleId, payId = Model.PayId })
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <h4 class="alert-danger">There are not related available sales yet</h4>
+        }
+    </section>
+
+   }
+</div>

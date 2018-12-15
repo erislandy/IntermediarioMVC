@@ -1,0 +1,47 @@
+﻿@model IEnumerable<IntermediarioMVC.Models.Pay>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Provider.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Certificated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Provider.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Certificated)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.PayId }) 
+            @if (!item.Certificated)
+            {
+                <a> | @Html.ActionLink("Delete", "Delete", new { id = item.PayId }) | @Html.ActionLink("Confirm pay", "ConfirmPay", new { payId = item.PayId })</a>
+            }
+        </td>
+    </tr>
+}
+
+</table>

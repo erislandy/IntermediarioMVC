@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace IntermediarioMVC.Models
         #region Properties
         public int PayId { get; set; }
         public int ProviderId { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public bool Certificated { get; set; }
 
