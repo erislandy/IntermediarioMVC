@@ -4,11 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details of pay</h2>
 
 <div>
-    <h4>Pay</h4>
-    <hr />
+   <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Provider.FirstName)
@@ -30,15 +29,14 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PayId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class="btn btn-default"})
 </p>
 <div class="row">
     <section id="Sales" class="col-md-6">
         <h3>Related Sales</h3>
         @if (Model.Sales != null && Model.Sales.Count > 0)
         {
-            <table class="table">
+            <table class="table table-bordered table-striped">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.AvailableSales[0].DateOfSale)
@@ -52,10 +50,12 @@
                     <th>
                         @Html.DisplayNameFor(model => model.AvailableSales[0].Amount)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AvailableSales[0].SaleState)
-                    </th>
-                    <th></th>
+                    @if (!Model.Certificated)
+                    {
+                        <th>
+                        </th>
+
+                    }
                 </tr>
                 @foreach (var item in Model.Sales)
                 {
@@ -72,13 +72,10 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Amount)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SaleState)
-                        </td>
                         @if (!Model.Certificated)
                         {
                             <td>
-                                @Html.ActionLink("Delete", "DeleteSale", new { saleId = item.SaleId, payId = Model.PayId })
+                                @Html.ActionLink("Unlink", "DeleteSale", new { saleId = item.SaleId, payId = Model.PayId }, new { @class="btn btn-warning"})
                             </td>
 
                         }
@@ -89,7 +86,9 @@
         }
         else
         {
-            <h4 class="alert-danger">There are not related sales yet</h4>
+            <div class="alert alert-warning" role="alert">
+                <p class="alert-link">There are not related sales yet</p>
+            </div>
         }
        </section>
    @if (!Model.Certificated)
@@ -112,10 +111,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.AvailableSales[0].Amount)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AvailableSales[0].SaleState)
-                    </th>
-                    <th></th>
+                     <th></th>
                 </tr>
                 @foreach (var item in Model.AvailableSales)
                 {
@@ -133,10 +129,7 @@
                             @Html.DisplayFor(modelItem => item.Amount)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SaleState)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Add", "AddSale", new { saleId = item.SaleId, payId = Model.PayId })
+                            @Html.ActionLink("Link", "AddSale", new { saleId = item.SaleId, payId = Model.PayId }, new { @class="btn btn-success"})
                         </td>
                     </tr>
                 }
@@ -144,9 +137,27 @@
         }
         else
         {
-            <h4 class="alert-danger">There are not related available sales yet</h4>
+            <div class="alert alert-warning" role="alert">
+                <p class="alert-link">There are not available sales yet</p>
+            </div>
+          
         }
     </section>
 
    }
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Total)
+            </dd>
+        </dl>
+
+</div>
 </div>

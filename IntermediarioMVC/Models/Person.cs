@@ -15,7 +15,7 @@ namespace IntermediarioMVC.Models
         [Required(ErrorMessage = "The field {0} is required")]
         [StringLength(20, ErrorMessage = "The field {0} contains maximun {1} and minimun {2} characters", MinimumLength = 3)]
         [Display(Name = "Last Name")]
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
         public string PhoneNumber { get; set; }

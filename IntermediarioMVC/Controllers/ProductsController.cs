@@ -4,9 +4,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Web; 
 using System.Web.Mvc;
 using IntermediarioMVC.Models;
+using IntermediarioMVC.Helpers;
 
 namespace IntermediarioMVC.Controllers
 {
@@ -48,18 +49,44 @@ namespace IntermediarioMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductId,CategoryId,ProductName,ImagePath,Remarks")] Product product)
+        public ActionResult Create(ProductView productView)
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Images";
+                if (productView.ImageFile != null)
+                {
+                    pic = FileHelper.UploadPhoto(productView.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+                Product product = ToProduct(productView);
+                product.ImagePath = pic;
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", productView.CategoryId);
+            return View(productView);
         }
+
+        private Product ToProduct(ProductView productView)
+        {
+            return new Product()
+            {
+
+                Category = productView.Category,
+                CategoryId = productView.CategoryId,
+                ImagePath = productView.ImagePath,
+                ProductId = productView.ProductId,
+                ProductName = productView.ProductName,
+                Purchases = productView.Purchases,
+                Remarks = productView.Remarks
+            };
+        }
+
+
 
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
@@ -74,7 +101,24 @@ namespace IntermediarioMVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            var productView = ToView(product);
+
+            return View(productView);
+        }
+
+        private ProductView ToView(Product product)
+        {
+            return new ProductView()
+            {
+                Category = product.Category,
+                CategoryId = product.CategoryId,
+                ImagePath = product.ImagePath == null ? "~/Content/Images/noImage.png":product.ImagePath,
+                ProductName = product.ProductName,
+                ProductId = product.ProductId,
+                Purchases = product.Purchases,
+                Remarks = product.Remarks
+
+            };
         }
 
         // POST: Products/Edit/5
@@ -82,16 +126,25 @@ namespace IntermediarioMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,CategoryId,ProductName,ImagePath,Remarks")] Product product)
+        public ActionResult Edit(ProductView productView)
         {
             if (ModelState.IsValid)
             {
+                var pic = productView.ImagePath;
+                var folder = "~/Content/Images";
+                if (productView.ImageFile != null)
+                {
+                    pic = FileHelper.UploadPhoto(productView.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+                Product product = ToProduct(productView);
+                product.ImagePath = pic;
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", productView.CategoryId);
+            return View(productView);
         }
 
         // GET: Products/Delete/5
@@ -116,7 +169,24 @@ namespace IntermediarioMVC.Controllers
         {
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    ViewBag.Error = "The product can not be deleted because it has related records";
+                }
+                else
+                {
+                    ViewBag.Error = ex.Message;
+                }
+                return View(product);
+            }
             return RedirectToAction("Index");
         }
 

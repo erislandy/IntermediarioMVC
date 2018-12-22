@@ -4,21 +4,26 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Pays</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("New Pay ", "Create",new { }, new { @class="btn btn-primary"})
 </p>
-<table class="table">
+
+
+<table class="table table-striped table-bordered">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Provider.FirstName)
+            Provider
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Certificated)
+        </th>
+        <th>
+           Value
         </th>
         <th></th>
     </tr>
@@ -35,12 +40,20 @@
             @Html.DisplayFor(modelItem => item.Certificated)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.PayId }) 
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.PayId }, new { @class="btn btn-info"}) 
             @if (!item.Certificated)
             {
-                <a> | @Html.ActionLink("Delete", "Delete", new { id = item.PayId }) | @Html.ActionLink("Confirm pay", "ConfirmPay", new { payId = item.PayId })</a>
+                <a>@Html.ActionLink("Delete", "Delete", new { id = item.PayId }, new { @class="btn btn-danger"})</a>
+                   if (item.Total != 0)
+                   {
+                    <a>@Html.ActionLink("Confirm pay", "ConfirmPay", new { payId = item.PayId }, new { @class = "btn btn-success" })</a>
+                   }
             }
         </td>
+       
     </tr>
 }
 

@@ -4,18 +4,21 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Providers</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("New Provider", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lastname)
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
@@ -23,19 +26,25 @@
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </th>
+        
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @if (!string.IsNullOrEmpty(item.ImagePath))
+                {
+                <img src="@Url.Content(item.ImagePath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+            }
+
+        </td>
+
+        <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
+            @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumber)
@@ -43,9 +52,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImagePath)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ProviderId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ProviderId }) |
@@ -55,3 +62,4 @@
 }
 
 </table>
+

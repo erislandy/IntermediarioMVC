@@ -16,11 +16,13 @@ namespace IntermediarioMVC.Controllers
 
         public ActionResult ConfirmPay(int payId)
         {
+
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
                 {
                     var pay = db.Pays.Find(payId);
+                    
 
                     foreach (var sale in pay.Sales.ToList())
                     {
@@ -69,7 +71,7 @@ namespace IntermediarioMVC.Controllers
         public ActionResult Index()
         {
             var pays = db.Pays.Include(p => p.Provider);
-            var list = pays.ToList();                
+            var list = pays.ToList();
             return View(pays.ToList());
         }
 

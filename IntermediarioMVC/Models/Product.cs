@@ -8,6 +8,10 @@ namespace IntermediarioMVC.Models
 {
     public class Product
     {
+        public Product()
+        {
+            ImagePath = "~/Content/Images/noImage.png";
+        }
         #region Properties
 
         [Key]

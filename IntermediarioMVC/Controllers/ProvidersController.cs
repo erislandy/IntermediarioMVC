@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IntermediarioMVC.Models;
+using IntermediarioMVC.Helpers;
 
 namespace IntermediarioMVC.Controllers
 {
@@ -17,6 +18,7 @@ namespace IntermediarioMVC.Controllers
         // GET: Providers
         public ActionResult Index()
         {
+           
             return View(db.Providers.ToList());
         }
 
@@ -70,7 +72,23 @@ namespace IntermediarioMVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(provider);
+            ProviderView providerView = ToView(provider);
+
+            return View(providerView);
+        }
+
+        private ProviderView ToView(Provider provider)
+        {
+            return new ProviderView()
+            {
+                Address = provider.Address,
+                FirstName = provider.FirstName,
+                ImagePath = provider.ImagePath == null ? "~/Content/Images/noImage.png" : provider.ImagePath,
+                LastName = provider.LastName,
+                PhoneNumber = provider.PhoneNumber,
+                ProviderId = provider.ProviderId,
+                Purchases = provider.Purchases,
+            };
         }
 
         // POST: Providers/Edit/5
@@ -78,15 +96,40 @@ namespace IntermediarioMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Provider provider)
+        public ActionResult Edit(ProviderView providerView)
         {
             if (ModelState.IsValid)
             {
+                var pic = providerView.ImagePath;
+                var folder = "~/Content/Images";
+                if (providerView.ImageFile != null)
+                {
+                    pic = FileHelper.UploadPhoto(providerView.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+                Provider provider = ToProduct(providerView);
+                provider.ImagePath = pic;
                 db.Entry(provider).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(provider);
+            return View(providerView);
+        }
+
+        private Provider ToProduct(ProviderView providerView)
+        {
+            return new Provider()
+            {
+
+                Address = providerView.Address,
+                FirstName = providerView.FirstName,
+                ImagePath = providerView.ImagePath,
+                PhoneNumber = providerView.PhoneNumber,
+                LastName = providerView.LastName,
+                ProviderId = providerView.ProviderId,
+                Purchases = providerView.Purchases
+
+            };
         }
 
         // GET: Providers/Delete/5
@@ -111,7 +154,24 @@ namespace IntermediarioMVC.Controllers
         {
             Provider provider = db.Providers.Find(id);
             db.Providers.Remove(provider);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    ViewBag.Error = "The provider can not be deleted because it has related records";
+                }
+                else
+                {
+                    ViewBag.Error = ex.Message;
+                }
+                return View(provider);
+            }
             return RedirectToAction("Index");
         }
 
