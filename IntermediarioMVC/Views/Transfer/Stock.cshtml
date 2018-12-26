@@ -5,8 +5,9 @@
 }
 
 <h2>Stock</h2>
+<hr/>
 <h4 class="alert-danger">@ViewBag.Alert</h4>
-<table class="table">
+<table class="table table-info table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Provider.FirstName)
@@ -14,9 +15,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Product.ProductName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Code)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.PriceInput)
         </th>
@@ -41,9 +40,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Product.ProductName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.PriceInput)
             </td>
@@ -54,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.State)
             </td>
             <td>
-                @Html.ActionLink("Modify State", "ModifyState", new { productInStockId = item.ProductInStockId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Modify State", "ModifyState", new { productInStockId = item.ProductInStockId }, new { @class = "btn btn-warning" })
                
             </td>
             

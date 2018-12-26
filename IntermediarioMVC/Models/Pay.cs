@@ -19,7 +19,7 @@ namespace IntermediarioMVC.Models
 
         [NotMapped]
         [DataType(DataType.Currency)]
-        public double Total
+        public double InputValue
         {
             get
             {
@@ -29,11 +29,30 @@ namespace IntermediarioMVC.Models
                 {
                     foreach (var sale in Sales)
                     {
-                        total += sale.Amount * sale.SalePrice; 
+                        total += sale.Amount * sale.ProductInStock.PriceInput; 
                     }
                 }
                 return total;
             } 
+        }
+        [NotMapped]
+        [DataType(DataType.Currency)]
+
+        public double SaleValue
+        {
+            get
+            {
+                double total = 0;
+
+                if (Sales != null && Sales.Count > 0)
+                {
+                    foreach (var sale in Sales)
+                    {
+                        total += sale.Amount * sale.SalePrice;
+                    }
+                }
+                return total;
+            }
         }
 
         #endregion  

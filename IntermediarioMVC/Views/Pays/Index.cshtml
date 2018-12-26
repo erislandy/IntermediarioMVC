@@ -5,6 +5,7 @@
 }
 
 <h2>Pays</h2>
+<hr/>
 
 <p>
     @Html.ActionLink("New Pay ", "Create",new { }, new { @class="btn btn-primary"})
@@ -40,14 +41,14 @@
             @Html.DisplayFor(modelItem => item.Certificated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Total)
+            @Html.DisplayFor(modelItem => item.InputValue)
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.PayId }, new { @class="btn btn-info"}) 
             @if (!item.Certificated)
             {
                 <a>@Html.ActionLink("Delete", "Delete", new { id = item.PayId }, new { @class="btn btn-danger"})</a>
-                   if (item.Total != 0)
+                   if (item.InputValue != 0)
                    {
                     <a>@Html.ActionLink("Confirm pay", "ConfirmPay", new { payId = item.PayId }, new { @class = "btn btn-success" })</a>
                    }

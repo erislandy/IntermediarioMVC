@@ -8,25 +8,20 @@
 
 <div>
    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Provider.FirstName)
-        </dt>
+    <div class="row">
+        <div class="col-sm-2">
+            <img src="@Url.Content(Model.Provider.ImagePath)" 
+                 alt="Image" class="ml-5 mt-0 rounded-circle"
+                 style="width:60px;height:60px;max-width: 100%; height: auto;" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Provider.FirstName)
-        </dd>
+        </div>
+        <div class="col-sm-4 text-info">
+            <h4 class="ml-0">@Model.Provider.FullName </h4>
+            <p class="ml-0">@Model.Date.ToShortDateString()</p>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index", new { }, new { @class="btn btn-default"})
@@ -151,11 +146,20 @@
 
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Total)
+               Input Value
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Total)
+                @Html.DisplayFor(model => model.InputValue)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>
+               Sale Value
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SaleValue)
             </dd>
         </dl>
 

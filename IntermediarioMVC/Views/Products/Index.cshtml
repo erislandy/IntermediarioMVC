@@ -5,14 +5,15 @@
 }
 
 <h2>Products</h2>
+<hr/>
 
 <p>
-    @Html.ActionLink("New Product", "Create")
+    @Html.ActionLink("New Product", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
-<table class="table">
+<table class="table table-bordered table-info" style="background-color:white">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
+            Image
         </th>
 
         <th>
@@ -50,9 +51,9 @@
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class="btn btn-danger"})
             </td>
         </tr>
     }

@@ -48,16 +48,26 @@ namespace IntermediarioMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PersonId,FirstName,Lastname,PhoneNumber,Address,ImagePath")] Provider provider)
+        public ActionResult Create(ProviderView providerView)
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Images";
+                if (providerView.ImageFile != null)
+                {
+                    pic = FileHelper.UploadPhoto(providerView.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+                Provider provider = ToProvider(providerView);
+                provider.ImagePath = pic;
                 db.Providers.Add(provider);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(provider);
+
+            return View(providerView);
         }
 
         // GET: Providers/Edit/5
@@ -107,7 +117,7 @@ namespace IntermediarioMVC.Controllers
                     pic = FileHelper.UploadPhoto(providerView.ImageFile, folder);
                     pic = string.Format("{0}/{1}", folder, pic);
                 }
-                Provider provider = ToProduct(providerView);
+                Provider provider = ToProvider(providerView);
                 provider.ImagePath = pic;
                 db.Entry(provider).State = EntityState.Modified;
                 db.SaveChanges();
@@ -116,7 +126,7 @@ namespace IntermediarioMVC.Controllers
             return View(providerView);
         }
 
-        private Provider ToProduct(ProviderView providerView)
+        private Provider ToProvider(ProviderView providerView)
         {
             return new Provider()
             {
