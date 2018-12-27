@@ -14,14 +14,28 @@ namespace IntermediarioMVC.Controllers
     {
         private IntermediarioMVCContext db = new IntermediarioMVCContext();
 
-        
+
         #region Purchase operations
-        public ActionResult Purchase()
+
+        
+        public ActionResult Purchase(string productName)
         {
             var purchases = db.Purchases.Include(pu => pu.Provider)
                                         .Include(pu => pu.Product)
                                         .ToList();
-            return View(purchases);
+            if (string.IsNullOrEmpty(productName))
+            {
+                return View(purchases);
+            }
+
+            return View(
+                
+                purchases.Where(p => p.Product.ProductName
+                                              .ToLower()
+                                              .Equals(productName.ToLower()))
+                                              .ToList()
+                );
+
         }
 
         public ActionResult NewPurchase()

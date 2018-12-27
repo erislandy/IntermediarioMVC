@@ -10,6 +10,22 @@
     @Html.ActionLink("New Purchase", "NewPurchase","Transfer",new { }, new { @class="btn btn-primary"})
 </p>
 
+@using (Html.BeginForm("Purchase", "Transfer", FormMethod.Get))
+{
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <p>Find by product:</p>
+        </li>
+        <li class="list-inline-item">
+            @Html.TextBox("productName", new { }, new { @class = "form-control" })
+        </li>
+        <li class="list-inline-item">
+            <input type="submit" value="Filter" class="btn btn-success" />
+        </li>
+    </ul>
+
+}
+
 <table class="table table-info table-striped">
     <tr>
         <th>
